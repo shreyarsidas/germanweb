@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lehnwörter — Loanwords: English & German</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=UnifrakturMaguntia&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --red: #CC0000;
+    --gold: #FFCE00;
+    --dark-red: #8B0000;
+    --cream: #FFF8E7;
+    --gray: #1a1a1a;
+    --mid-gray: #2e2e2e;
+    --text-light: #e8e8e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .flag-stripe {
+    position: absolute;
+    width: 100%;
+    height: 33.33%;
+  }
+  .flag-stripe.s1 { top: 0; background: #111; opacity: 0.9; }
+  .flag-stripe.s2 { top: 33.33%; background: var(--dark-red); opacity: 0.25; }
+  .flag-stripe.s3 { top: 66.66%; background: var(--gold); opacity: 0.08; }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--cream);
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title .de { color: var(--gold); }
+  .hero-title .en { color: var(--red); }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: #aaa;
+    max-width: 560px;
+    margin: 2rem auto 3rem;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn {
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .btn-gold:hover { background: #e6b800; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid #444;
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); transform: translateY(-2px); }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: #555;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  .scroll-indicator span { width: 1px; height: 40px; background: linear-gradient(to bottom, #555, transparent); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--red);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { color: var(--gold); font-style: normal; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ── ABOUT SECTION ── */
+  #about { background: var(--gray); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .about-text p {
+    color: #bbb;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p strong { color: var(--gold); }
+
+  .stat-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-block {
+    background: var(--mid-gray);
+    border: 1px solid #333;
+    border-top: 3px solid var(--red);
+    padding: 1.5rem;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-desc {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+  }
+
+  /* ── LOANWORD TABLES ── */
+  #loanwords { background: var(--black); }
+
+  .direction-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 1.5px solid #333;
+    width: fit-content;
+  }
+
+  .dir-btn {
+    padding: 0.7rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .dir-btn.active { background: var(--red); color: white; }
+  .dir-btn:not(.active) { background: var(--mid-gray); color: #888; }
+  .dir-btn:not(.active):hover { background: #333; color: #ccc; }
+
+  .words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: #222;
+    border: 1px solid #222;
+  }
+
+  .word-card {
+    background: var(--gray);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .word-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.2s;
+    transform-origin: bottom;
+  }
+
+  .word-card:hover { background: #222; }
+  .word-card:hover::before { transform: scaleY(1); }
+
+  .word-original {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .word-translation {
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .word-origin {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .word-desc {
+    font-size: 0.87rem;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  .word-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    margin-top: 0.6rem;
+    background: rgba(204,0,0,0.15);
+    color: var(--red);
+    border: 1px solid rgba(204,0,0,0.3);
+  }
+
+  .hidden { display: none; }
+
+  /* ── GAME SECTION ── */
+  #game {
+    background: var(--gray);
+    min-height: 100vh;
+  }
+
+  .game-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 900px) {
+    .game-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  /* Wheel */
+  .wheel-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wheel-container {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    max-width: 90vw;
+    max-height: 90vw;
+  }
+
+  .pointer {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 28px solid var(--gold);
+    z-index: 10;
+    filter: drop-shadow(0 2px 6px rgba(255,206,0,0.6));
+  }
+
+  #wheelCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(204,0,0,0.3), 0 0 80px rgba(255,206,0,0.1);
+  }
+
+  .wheel-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--black);
+    border: 4px solid var(--gold);
+    z-index: 5;
+  }
+
+  .spin-btn {
+    padding: 0.9rem 2.5rem;
+    background: var(--red);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .spin-btn:not(:disabled):hover { background: #ff1a1a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(204,0,0,0.4); }
+
+  /* Quiz Panel */
+  .quiz-panel {
+    background: var(--mid-gray);
+    border: 1px solid #333;
+    padding: 2rem;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .quiz-idle {
+    text-align: center;
+    color: #555;
+  }
+
+  .quiz-idle .idle-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    filter: grayscale(1);
+  }
+
+  .quiz-idle p { font-size: 0.95rem; line-height: 1.6; }
+
+  .quiz-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .quiz-hint {
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-q {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 1.2rem;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .opt-btn {
+    padding: 0.8rem 1rem;
+    background: var(--gray);
+    border: 1.5px solid #444;
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    line-height: 1.3;
+  }
+
+  .opt-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); background: rgba(255,206,0,0.05); }
+
+  .opt-btn.correct { background: rgba(0,180,0,0.15); border-color: #00b400; color: #4dff4d; }
+  .opt-btn.wrong { background: rgba(204,0,0,0.15); border-color: var(--red); color: #ff6666; }
+  .opt-btn:disabled { cursor: default; }
+
+  .feedback {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+    border-left: 3px solid;
+    line-height: 1.5;
+  }
+
+  .feedback.correct { border-color: #00b400; background: rgba(0,180,0,0.08); color: #88ff88; }
+  .feedback.wrong { border-color: var(--red); background: rgba(204,0,0,0.08); color: #ff9999; }
+
+  .next-btn {
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .next-btn:hover { background: #e6b800; }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #333;
+  }
+
+  .score-label { font-size: 0.8rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
+  .score-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); }
+  .score-total { font-size: 0.85rem; color: #555; }
+
+  /* ── HISTORY ── */
+  #history { background: var(--black); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--red), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3rem;
+    padding-left: 2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s;
+  }
+
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.45rem;
+    top: 0.3rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--black);
+  }
+
+  .timeline-era {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+
+  .timeline-body {
+    color: #999;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    max-width: 640px;
+  }
+
+  .timeline-body strong { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 2px solid #1a1a1a;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-sub {
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+  }
+
+  .flag-bar {
+    display: flex;
+    height: 4px;
+    width: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .flag-bar div { flex: 1; }
+  .fb1 { background: #111; }
+  .fb2 { background: var(--red); }
+  .fb3 { background: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .clue-btn {
+    padding: 0.4rem 0.9rem;
+    background: transparent;
+    border: 1.5px solid #444;
+    color: #888;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .clue-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .clue-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .clue-box {
+    background: rgba(255,206,0,0.07);
+    border: 1px solid rgba(255,206,0,0.25);
+    border-left: 3px solid var(--gold);
+    padding: 0.65rem 1rem;
+    font-size: 0.88rem;
+    color: #d4b800;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    animation: fadeUp 0.3s forwards;
+  }
+
+  .feedback-hidden { display: none; }
+
+  .streak-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #ff8c00;
+    margin-left: 0.3rem;
+  }
+
+  .opt-btn .opt-emoji { margin-right: 0.4rem; font-size: 1rem; }
+
+  .quiz-q {
+    font-size: 0.92rem;
+    color: #aaa;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.8rem;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid #333;
+  }
+
+
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 1px;
+    animation: confettiFall 1.5s forwards ease-in;
+  }
+
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(250px) rotate(720deg); }
+  }
+
+  .streaks {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+
+  .streak {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(255,206,0,0.08), transparent);
+    animation: streakFall linear infinite;
+  }
+
+  @keyframes streakFall {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100vh); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient streaks -->
+<div class="streaks" id="streaks"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Lehnwörter</a>
+  <ul class="nav-links">
+    <li><a href="#about">Über</a></li>
+    <li><a href="#loanwords">Words</a></li>
+    <li><a href="#game">Spiel</a></li>
+    <li><a href="#history">History</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="flag-stripe s1"></div>
+  <div class="flag-stripe s2"></div>
+  <div class="flag-stripe s3"></div>
+  <div class="hero-noise"></div>
+
+  <div style="position:relative; z-index:2;">
+    <p class="hero-badge">Lehnwörter · Loanwords · Entlehnungen</p>
+    <h1 class="hero-title">
+      <span class="de">Deutsch</span><br>
+      <span style="color:#555; font-size:0.5em;">&amp;</span><br>
+      <span class="en">English</span>
+    </h1>
+    <p class="hero-subtitle">Two great languages locked in centuries of mutual borrowing — how <em style="color:var(--gold)">Angst</em> became English anxiety and <em style="color:var(--red)">Computer</em> became German tech.</p>
+    <div class="hero-cta">
+      <a href="#loanwords" class="btn btn-gold">Explore Loanwords</a>
+      <a href="#game" class="btn btn-outline">Play the Game ↓</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">scroll<span></span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Two Languages, <em>One Conversation</em></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>English and German share a <strong>common Germanic ancestor</strong> — Proto-Germanic — spoken over 2,000 years ago. Despite diverging dramatically, the two languages never stopped borrowing from each other.</p>
+        <p>During the <strong>19th and 20th centuries</strong>, German philosophy, science, and psychology flooded English: <em>Weltanschauung, Kindergarten, Angst, Schadenfreude, Wanderlust</em>. Meanwhile, post-WWII American cultural dominance sent waves of English words back into German: <em>Computer, Selfie, Baby, Hobby, Hamburger</em>.</p>
+        <p>Today, this exchange accelerates with the internet, pop culture, and global commerce — making both languages richer and more expressive.</p>
+      </div>
+      <div class="stat-blocks">
+        <div class="stat-block">
+          <div class="stat-num">~30%</div>
+          <div class="stat-desc">of modern German vocabulary has English-derived elements in everyday media</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">300+</div>
+          <div class="stat-desc">German loanwords are fully established in English dictionaries</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">2000+</div>
+          <div class="stat-desc">years of shared Germanic roots between the two languages</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">new "Anglicisms" entering German language each year via internet culture</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOANWORDS -->
+<section id="loanwords">
+  <div class="container">
+    <p class="section-label">Dictionary</p>
+    <h2 class="section-title">The <em>Borrowed</em> Lexicon</h2>
+    <div class="direction-toggle">
+      <button class="dir-btn active" onclick="showWords('de-en')">🇩🇪 → 🇬🇧 German into English</button>
+      <button class="dir-btn" onclick="showWords('en-de')">🇬🇧 → 🇩🇪 English into German</button>
+    </div>
+    <div class="words-grid" id="wordsGrid"></div>
+  </div>
+</section>
+
+<!-- GAME -->
+<section id="game">
+  <div class="container">
+    <p class="section-label">Spiel · Game</p>
+    <h2 class="section-title">Spin the <em>Rad</em></h2>
+    <p style="color:#888; max-width:560px; line-height:1.7; margin-bottom:2rem;">Spin the wheel to land on a German loanword used in English every day. Pick the right meaning — use the emoji clue if you're stuck!</p>
+
+    <div class="game-layout">
+      <!-- Wheel -->
+      <div class="wheel-wrapper">
+        <div class="wheel-container">
+          <div class="pointer"></div>
+          <canvas id="wheelCanvas" width="380" height="380"></canvas>
+          <div class="wheel-center"></div>
+        </div>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">DREHEN · SPIN</button>
+        <div style="text-align:center; font-size:0.8rem; color:#555; margin-top:0.5rem; letter-spacing:0.1em;">Click to spin the wheel</div>
+      </div>
+
+      <!-- Quiz Panel -->
+      <div class="quiz-panel" id="quizPanel">
+        <div class="quiz-idle" id="idleState">
+          <div class="idle-icon">🎡</div>
+          <p style="font-size:1rem; color:#888; line-height:1.7;">Give the wheel a spin!<br>A German word will appear — pick its English meaning from 4 choices.<br><br><span style="color:#555; font-size:0.85rem;">🔍 Stuck? Use the clue button!</span></p>
+        </div>
+        <div id="questionState" style="display:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+            <div class="quiz-word" id="quizWord"></div>
+            <button class="clue-btn" id="clueBtn" onclick="revealClue()">💡 Clue</button>
+          </div>
+          <div class="quiz-hint" id="quizHint">🇩🇪 German → 🇬🇧 English</div>
+          <div class="clue-box hidden" id="clueBox"></div>
+          <div class="quiz-q" id="quizQ"></div>
+          <div class="options-grid" id="optionsGrid"></div>
+          <div id="feedbackBox" class="feedback-hidden"></div>
+          <button class="next-btn" id="nextBtn" style="display:none;" onclick="nextQuestion()">🎡 Spin Again →</button>
+        </div>
+        <div class="score-bar">
+          <div>
+            <span class="score-label">Score</span>
+            <span class="score-val" id="scoreVal">0</span>
+            <span class="score-total" id="scoreTotal">/ 0</span>
+          </div>
+          <div id="streakDisplay" style="display:none;">
+            <span class="score-label">Streak</span>
+            <span class="streak-val" id="streakVal">🔥 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="container">
+    <p class="section-label">Geschichte · History</p>
+    <h2 class="section-title">A Timeline of <em>Mutual Influence</em></h2>
+    <div class="timeline" id="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">~500 BCE – 400 CE</div>
+        <div class="timeline-heading">Common Germanic Roots</div>
+        <div class="timeline-body">Both English and German descend from <strong>Proto-Germanic</strong>. Words like <em>Wasser / water</em>, <em>Brot / bread</em>, and <em>gut / good</em> reveal their shared ancestry — these aren't loanwords, they're twins.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">9th – 15th Century</div>
+        <div class="timeline-heading">Medieval Trade & the Hanseatic League</div>
+        <div class="timeline-body">German merchant guilds dominated North Sea and Baltic trade. English absorbed terms like <strong>huckster</strong> (from Low German <em>hökster</em>) and trade words that shaped the commercial vocabulary of early English.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">17th – 18th Century</div>
+        <div class="timeline-heading">Science, Mining & Music</div>
+        <div class="timeline-body">German miners and scientists introduced <strong>cobalt, nickel, quartz, zinc, feldspar</strong> into English scientific vocabulary. German musical terminology — <em>Leitmotiv, Walzer (waltz), Lied</em> — followed the spread of German classical music across Europe.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">19th Century</div>
+        <div class="timeline-heading">Philosophy, Psychology & Kindergartens</div>
+        <div class="timeline-body">The golden age of German intellectual exports. <strong>Angst, Weltanschauung, Zeitgeist, Kindergarten, Gesundheit</strong> entered English through German philosophy, Freudian psychology, and the influence of German immigrant communities in America.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">1945 – 1980</div>
+        <div class="timeline-heading">The American Wave: Denglisch Begins</div>
+        <div class="timeline-body">Post-WWII American cultural dominance flooded German with English terms. <strong>Baby, Baby-sitter, Hobby, Teenager, Job, Computer</strong> arrived wholesale, often with adapted spelling. Critics coined <em>"Denglisch"</em> — the contested mix of Deutsch and English.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-era">1990s – Present</div>
+        <div class="timeline-heading">Digital Culture & Continuous Exchange</div>
+        <div class="timeline-body">The internet accelerated borrowing in both directions. German adopted <strong>Selfie, Hashtag, Fake News, Shitstorm</strong> (the latter now in German dictionaries). English, in turn, embraced <em>Schadenfreude, Wanderlust, Doppelgänger, Wunderkind</em> as concepts with no clean English equivalent.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Lehnwörter</div>
+  <p class="footer-sub">A Linguistic Journey Between English & German</p>
+  <div class="flag-bar"><div class="fb1"></div><div class="fb2"></div><div class="fb3"></div></div>
+  <p style="margin-top:1.5rem; font-size:0.75rem; color:#333;">Language is the ultimate open-source project.</p>
+</footer>
+
+<script>
+// ── DATA ──
+const deToEn = [
+  { word: 'Kindergarten', translation: 'kindergarten', origin: 'From Kinder (children) + Garten (garden)', desc: 'Introduced to the US by German immigrants in the 1850s. Friedrich Fröbel coined the term in 1837.', tag: 'Education' },
+  { word: 'Angst', translation: 'angst', origin: 'German for fear / anxiety', desc: 'Existential dread or inner anxiety. Popularized via Freudian psychology and existentialist philosophy.', tag: 'Psychology' },
+  { word: 'Schadenfreude', translation: 'schadenfreude', origin: 'Schaden (damage) + Freude (joy)', desc: 'Pleasure derived from another\'s misfortune. English had no single word for this concept.', tag: 'Emotion' },
+  { word: 'Wanderlust', translation: 'wanderlust', origin: 'Wandern (to hike) + Lust (desire)', desc: 'A strong desire to travel and explore the world. Entered English in the early 20th century.', tag: 'Travel' },
+  { word: 'Doppelgänger', translation: 'doppelganger', origin: 'Doppel (double) + Gänger (walker)', desc: 'A ghostly double of a living person. Now widely used in English for any lookalike.', tag: 'Folklore' },
+  { word: 'Zeitgeist', translation: 'zeitgeist', origin: 'Zeit (time) + Geist (spirit)', desc: 'The defining spirit or mood of a particular era. Adopted from German Romanticism and Hegel\'s philosophy.', tag: 'Philosophy' },
+  { word: 'Weltanschauung', translation: 'worldview', origin: 'Welt (world) + Anschauung (perception)', desc: 'A comprehensive philosophy or view of the world. Still often kept in German form in academic English.', tag: 'Philosophy' },
+  { word: 'Rucksack', translation: 'rucksack', origin: 'Rücken (back) + Sack (bag)', desc: 'A backpack. Entered English through mountaineering culture and British military use.', tag: 'Everyday' },
+  { word: 'Poltergeist', translation: 'poltergeist', origin: 'Poltern (to rumble) + Geist (ghost)', desc: 'A ghost that makes noises and moves objects. A staple of horror fiction and film.', tag: 'Folklore' },
+  { word: 'Leitmotiv', translation: 'leitmotif', origin: 'Leit (leading) + Motiv (motif)', desc: 'A recurring musical theme. Coined in Wagnerian opera analysis; now used in film and literature.', tag: 'Music' },
+  { word: 'Wunderkind', translation: 'wunderkind', origin: 'Wunder (wonder) + Kind (child)', desc: 'A child prodigy. Now applied to any exceptionally talented young person.', tag: 'Achievement' },
+  { word: 'Gesundheit', translation: 'gesundheit', origin: 'German for "health"', desc: 'Said after someone sneezes. Widely used in American English as an alternative to "bless you".', tag: 'Social' },
+];
+
+const enToDe = [
+  { word: 'Computer', translation: 'Computer (der)', origin: 'English "computer"', desc: 'Adopted wholesale — spelling and all. One of the most recognizable Anglicisms in German.', tag: 'Technology' },
+  { word: 'Baby', translation: 'Baby (das)', origin: 'English "baby"', desc: 'Replaced some uses of "Säugling" (infant). Fully integrated into German with a German article.', tag: 'Everyday' },
+  { word: 'Hobby', translation: 'Hobby (das)', origin: 'English "hobby"', desc: 'Used for recreational activities. German had no precise single-word equivalent before adopting this.', tag: 'Lifestyle' },
+  { word: 'Selfie', translation: 'Selfie (das)', origin: 'English "selfie"', desc: 'Entered German with social media. Now in standard German dictionaries.', tag: 'Digital' },
+  { word: 'Job', translation: 'Job (der)', origin: 'English "job"', desc: 'Often used alongside "Arbeit" (work) and "Stelle" (position), particularly for part-time or casual work.', tag: 'Work' },
+  { word: 'Teenager', translation: 'Teenager (der)', origin: 'English "teenager"', desc: 'Entered German post-WWII with American cultural influence. Fully naturalized.', tag: 'Social' },
+  { word: 'Hamburger', translation: 'Hamburger (der)', origin: 'Originally from Hamburg, Germany!', desc: 'Ironically, this word traveled from Hamburg → America → back to Germany as a loanword for the food item.', tag: 'Food' },
+  { word: 'Shitstorm', translation: 'Shitstorm (der)', origin: 'English "shitstorm"', desc: 'Now officially in the Duden dictionary! Used for a wave of public online criticism. A uniquely German adoption.', tag: 'Digital' },
+  { word: 'Hashtag', translation: 'Hashtag (das)', origin: 'English "hashtag"', desc: 'Social media terminology adopted directly. Germans use it on all platforms without modification.', tag: 'Digital' },
+  { word: 'Fake News', translation: 'Fake News', origin: 'English "fake news"', desc: 'Entered German political discourse after 2016. Used verbatim even in German news reporting.', tag: 'Media' },
+  { word: 'Mainstream', translation: 'Mainstream (der)', origin: 'English "mainstream"', desc: 'Widely used in German cultural criticism and media discussions. No German equivalent felt as natural.', tag: 'Culture' },
+  { word: 'Team', translation: 'Team (das)', origin: 'English "team"', desc: 'Replaced "Mannschaft" in many professional and business contexts, though Mannschaft lives on in sports.', tag: 'Business' },
+];
+
+// ── WORDS GRID ──
+let currentDir = 'de-en';
+
+function showWords(dir) {
+  currentDir = dir;
+  document.querySelectorAll('.dir-btn').forEach((b, i) => {
+    b.classList.toggle('active', (dir === 'de-en' && i === 0) || (dir === 'en-de' && i === 1));
+  });
+  const data = dir === 'de-en' ? deToEn : enToDe;
+  const grid = document.getElementById('wordsGrid');
+  grid.innerHTML = data.map(w => `
+    <div class="word-card">
+      <div class="word-original">${w.word}</div>
+      <div class="word-translation">${w.translation}</div>
+      <div class="word-origin">${w.origin}</div>
+      <div class="word-desc">${w.desc}</div>
+      <span class="word-tag">${w.tag}</span>
+    </div>
+  `).join('');
+}
+
+showWords('de-en');
+
+// ── GAME DATA ──
+const gameWords = [
+  {
+    word: 'Angst',
+    question: 'You\'re about to give a speech in front of 500 people. That tight, nervous dread in your chest is called…',
+    clue: '😰 Think: the feeling before a scary exam or a rollercoaster drop',
+    options: ['😊 Pure joy', '😰 Anxiety / inner dread', '🍞 A type of bread', '🏆 A military rank'],
+    correct: 1,
+    fun: '"Angst" is so perfect, English just stole it whole!'
+  },
+  {
+    word: 'Wanderlust',
+    question: 'You see a photo of mountains in Patagonia and immediately want to book a flight. What is this irresistible feeling called?',
+    clue: '🌍 Wander = roam, Lust = desire — put them together!',
+    options: ['😨 Fear of flying', '😴 Desire to sleep in', '✈️ A burning urge to travel', '🏠 Longing to stay home'],
+    correct: 2,
+    fun: 'Wanderlust has no single English equivalent — that\'s why we borrowed it!'
+  },
+  {
+    word: 'Schadenfreude',
+    question: 'Your rival slips on a banana peel. You feel a tiny secret smile form. What is that guilty feeling?',
+    clue: '😈 Schaden = damage, Freude = joy. Joy... from damage?',
+    options: ['😇 Sympathy for them', '😈 Sneaky joy at their misfortune', '😢 Feeling sad for them', '🤝 Wanting to help them up'],
+    correct: 1,
+    fun: 'English had NO word for this feeling — so it borrowed German\'s perfect one!'
+  },
+  {
+    word: 'Kindergarten',
+    question: 'Where do 4-year-olds go to learn, play, and paint with their hands before "real" school starts?',
+    clue: '🧒 Kinder = children, Garten = garden. A garden for…?',
+    options: ['🌱 A literal flower garden', '👶 Pre-school for young children', '🏫 A strict German academy', '🌳 An outdoor adventure park'],
+    correct: 1,
+    fun: 'Friedrich Fröbel invented kindergartens in 1837. German immigrants brought them to America!'
+  },
+  {
+    word: 'Doppelgänger',
+    question: 'You\'re walking down the street when someone yells "HEY!" — but they\'re looking at a stranger who looks EXACTLY like you. That stranger is your…',
+    clue: '👯 Doppel = double, Gänger = walker. A walking double!',
+    options: ['👯 Your exact lookalike', '🧳 A long journey', '💃 A type of dance', '👻 A friendly ghost'],
+    correct: 0,
+    fun: 'In folklore, seeing your own doppelgänger was considered a very bad omen!'
+  },
+  {
+    word: 'Poltergeist',
+    question: 'Books fly off shelves, doors slam on their own, and things go BUMP in the night. What kind of ghost is causing this?',
+    clue: '👻 Poltern = to rumble/bang, Geist = ghost',
+    options: ['🌩️ A thunderstorm spirit', '🎶 A musical ghost', '👻 A noisy, mischievous ghost', '🗳️ A political movement'],
+    correct: 2,
+    fun: 'Unlike quiet ghosts, a poltergeist loves to make noise and move objects around!'
+  },
+  {
+    word: 'Wunderkind',
+    question: 'Mozart wrote his first symphony at age 8. Tiger Woods won his first tournament at 8. These exceptional young talents are called…',
+    clue: '🌟 Wunder = wonder/miracle, Kind = child',
+    options: ['🧙 A magical creature', '🌟 A child prodigy / young genius', '🧚 A fairy-tale character', '🤔 A very curious child'],
+    correct: 1,
+    fun: 'Today "wunderkind" is used for any exceptionally talented young person, not just children!'
+  },
+  {
+    word: 'Rucksack',
+    question: 'You pack your lunch, water bottle, and textbooks into it and throw it over your shoulders before school. What is it?',
+    clue: '🎒 Rücken = back, Sack = bag. A bag for your…?',
+    options: ['🧳 A rolling suitcase', '🎒 A backpack', '🧥 A heavy winter coat', '🛏️ A sleeping bag'],
+    correct: 1,
+    fun: 'British English still uses "rucksack" — Americans more commonly say "backpack"!'
+  },
+  {
+    word: 'Gesundheit',
+    question: 'Your friend lets out a massive ACHOO! What do you say in response?',
+    clue: '🤧 Gesundheit literally means "health" in German',
+    options: ['🌙 Good night!', '🙏 Thank you very much!', '🤧 Bless you! (said after sneezing)', '🥘 Name of a German soup'],
+    correct: 2,
+    fun: 'German immigrants popularised this in the US — it means wishing someone good health after a sneeze!'
+  },
+  {
+    word: 'Zeitgeist',
+    question: 'In the 1960s, everyone was talking about peace, rock music, and flower power. What do we call this shared cultural mood of a time period?',
+    clue: '🕰️ Zeit = time, Geist = spirit. The spirit of the…?',
+    options: ['👻 A ghost story', '⏰ A clock repair shop', '✨ The spirit / mood of an era', '💰 An old German gold coin'],
+    correct: 2,
+    fun: 'Hegel popularised this concept in German philosophy. English adopted it in the 19th century!'
+  },
+  {
+    word: 'Leitmotiv',
+    question: 'Every time Darth Vader appears in Star Wars, that iconic DUN DUN DUN music plays. This repeated musical theme is called a…',
+    clue: '🎵 Leit = leading, Motiv = theme/motif',
+    options: ['🥐 A type of German pastry', '🎵 A recurring musical theme', '🐌 A very slow waltz', '🎭 The lead actor\'s biggest scene'],
+    correct: 1,
+    fun: 'Wagner invented the concept for his operas. John Williams mastered it for Star Wars!'
+  },
+  {
+    word: 'Weltanschauung',
+    question: 'Someone who believes the world is fundamentally good, that kindness wins, and that people are basically decent — that\'s their personal…',
+    clue: '🌐 Welt = world, Anschauung = perception/view',
+    options: ['🌍 A plan for world domination', '🌐 A personal worldview or life philosophy', '✈️ An international vacation plan', '📝 A type of philosophy exam'],
+    correct: 1,
+    fun: 'This word is so specific and rich that English academics still often write it in German!'
+  },
+];
+
+// ── WHEEL ──
+const canvas = document.getElementById('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const N = gameWords.length;
+const segAngle = (2 * Math.PI) / N;
+const colors = ['#CC0000','#8B0000','#FFCE00','#111','#CC0000','#8B0000','#FFCE00','#111','#CC0000','#8B0000','#FFCE00','#111'];
+
+let currentAngle = 0;
+let spinning = false;
+let score = 0, total = 0, streak = 0;
+let currentWord = null;
+let clueUsed = false;
+
+function drawWheel(angle) {
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 4;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < N; i++) {
+    const start = angle + i * segAngle;
+    const end = start + segAngle;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    ctx.strokeStyle = '#0a0a0a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Text
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + segAngle / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = colors[i % colors.length] === '#FFCE00' ? '#000' : '#fff';
+    ctx.font = `bold ${canvas.width > 300 ? 13 : 10}px "DM Sans", sans-serif`;
+    ctx.fillText(gameWords[i].word, r - 12, 5);
+    ctx.restore();
+  }
+
+  // Outer ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#FFCE00';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+}
+
+drawWheel(0);
+
+function spinWheel() {
+  if (spinning) return;
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('idleState').style.display = 'block';
+  document.getElementById('questionState').style.display = 'none';
+
+  const extra = Math.PI * 2 * (8 + Math.random() * 5);
+  const duration = 3500 + Math.random() * 1000;
+  const start = performance.now();
+  const startAngle = currentAngle;
+
+  function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+  function animate(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    currentAngle = startAngle + extra * ease(progress);
+    drawWheel(currentAngle);
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      landOnWord();
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function landOnWord() {
+  // Pointer is at top of canvas = -π/2 in canvas angle coordinates.
+  // Segment i occupies [currentAngle + i*segAngle, currentAngle + (i+1)*segAngle].
+  // Find which segment contains -π/2 by computing how far -π/2 is from currentAngle, normalised to [0, 2π).
+  const TWO_PI = 2 * Math.PI;
+  let offset = (-Math.PI / 2 - currentAngle);
+  offset = ((offset % TWO_PI) + TWO_PI) % TWO_PI;
+  const idx = Math.floor(offset / segAngle) % N;
+  currentWord = gameWords[idx];
+  showQuestion(currentWord);
+}
+
+function showQuestion(word) {
+  clueUsed = false;
+  document.getElementById('idleState').style.display = 'none';
+  document.getElementById('questionState').style.display = 'block';
+  document.getElementById('quizWord').textContent = word.word;
+  document.getElementById('quizHint').textContent = '🇩🇪 German → 🇬🇧 English';
+  document.getElementById('quizQ').textContent = word.question;
+  document.getElementById('clueBox').className = 'clue-box hidden';
+  document.getElementById('clueBox').textContent = '';
+  document.getElementById('clueBtn').disabled = false;
+  document.getElementById('clueBtn').textContent = '💡 Clue';
+  document.getElementById('feedbackBox').className = 'feedback-hidden';
+  document.getElementById('feedbackBox').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = word.options.map((opt, i) => `
+    <button class="opt-btn" onclick="checkAnswer(${i})">${opt}</button>
+  `).join('');
+}
+
+function revealClue() {
+  clueUsed = true;
+  const box = document.getElementById('clueBox');
+  box.className = 'clue-box';
+  box.textContent = currentWord.clue;
+  const btn = document.getElementById('clueBtn');
+  btn.disabled = true;
+  btn.textContent = '💡 Clue used';
+}
+
+function checkAnswer(idx) {
+  total++;
+  document.getElementById('scoreTotal').textContent = `/ ${total}`;
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  btns[currentWord.correct].classList.add('correct');
+
+  const fb = document.getElementById('feedbackBox');
+  fb.style.display = 'block';
+
+  if (idx === currentWord.correct) {
+    streak++;
+    score++;
+    document.getElementById('scoreVal').textContent = score;
+    document.getElementById('streakVal').textContent = `🔥 ${streak}`;
+    document.getElementById('streakDisplay').style.display = 'block';
+    fb.className = 'feedback correct';
+    const streakMsg = streak >= 3 ? ` 🔥 ${streak} in a row!` : '';
+    fb.innerHTML = `✓ Correct!${streakMsg}<br><span style="font-size:0.82rem; color:#aaa; margin-top:0.3rem; display:block;">💬 ${currentWord.fun}</span>`;
+    spawnConfetti();
+  } else {
+    streak = 0;
+    document.getElementById('streakVal').textContent = `🔥 0`;
+    btns[idx].classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.innerHTML = `✗ Not quite — the answer was: <strong style="color:#88ff88">${currentWord.options[currentWord.correct]}</strong><br><span style="font-size:0.82rem; color:#aaa; margin-top:0.3rem; display:block;">💬 ${currentWord.fun}</span>`;
+  }
+
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  document.getElementById('idleState').style.display = 'block';
+  document.getElementById('questionState').style.display = 'none';
+}
+
+function spawnConfetti() {
+  const colors = ['#FFCE00','#CC0000','#fff','#ff9900','#ff4444'];
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${40 + Math.random() * 20}%;
+      top: ${60 + Math.random() * 10}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      transform: translateX(${(Math.random()-0.5)*200}px);
+      animation-delay: ${Math.random()*0.3}s;
+      animation-duration: ${1.2 + Math.random()*0.8}s;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2500);
+  }
+}
+
+// ── AMBIENT STREAKS ──
+const streakContainer = document.getElementById('streaks');
+for (let i = 0; i < 12; i++) {
+  const s = document.createElement('div');
+  s.className = 'streak';
+  s.style.cssText = `
+    left: ${Math.random()*100}%;
+    height: ${100 + Math.random()*200}px;
+    animation-duration: ${6 + Math.random()*8}s;
+    animation-delay: ${-Math.random()*8}s;
+    opacity: ${0.3 + Math.random()*0.4};
+  `;
+  streakContainer.appendChild(s);
+}
+
+// ── TIMELINE INTERSECTION OBSERVER ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
